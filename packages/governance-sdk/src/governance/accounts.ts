@@ -3,7 +3,6 @@ import BN from 'bn.js';
 import BigNumber from 'bignumber.js';
 import { Vote, VoteKind } from './instructions';
 import { PROGRAM_VERSION_V1, PROGRAM_VERSION_V2 } from '../registry/constants';
-import { getErrorMessage } from '..';
 
 /// Seed  prefix for Governance Program PDAs
 export const GOVERNANCE_PROGRAM_SEED = 'governance';
@@ -463,6 +462,7 @@ export class TokenOwnerRecord {
     totalVotesCount: number;
     outstandingProposalCount: number;
     reserved: Uint8Array;
+    governanceDelegate: PublicKey | undefined;
   }) {
     this.realm = args.realm;
     this.governingTokenMint = args.governingTokenMint;
@@ -472,6 +472,7 @@ export class TokenOwnerRecord {
     this.totalVotesCount = args.totalVotesCount;
     this.outstandingProposalCount = args.outstandingProposalCount;
     this.reserved = args.reserved;
+    this.governanceDelegate = args.governanceDelegate;
   }
 }
 

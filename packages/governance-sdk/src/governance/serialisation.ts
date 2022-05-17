@@ -21,6 +21,7 @@ import {
   RelinquishVoteArgs,
   RemoveTransactionArgs,
   SetGovernanceConfigArgs,
+  SetGovernanceDelegateArgs,
   SetRealmAuthorityArgs,
   SetRealmConfigArgs,
   SignOffProposalArgs,
@@ -236,6 +237,16 @@ function createGovernanceSchema(programVersion: number) {
       {
         kind: 'struct',
         fields: [['instruction', 'u8']],
+      },
+    ],
+    [
+      SetGovernanceDelegateArgs,
+      {
+        kind: 'struct',
+        fields: [
+          ['instruction', 'u8'],
+          ['newGovernanceDelegate', { kind: 'option', type: 'pubkey' }],
+        ],
       },
     ],
     [
@@ -754,3 +765,21 @@ export function getInstructionDataFromBase64(instructionDataBase64: string) {
 
   return instructionData;
 }
+
+export class CreateVotePercentage {
+  vote_percentage: number;
+
+  constructor(args: { vote_percentage: number }) {
+    this.vote_percentage = args.vote_percentage;
+  }
+}
+
+export const VOTE_PERCENTAGE_SCHEMA = new Map([
+  [
+    CreateVotePercentage,
+    {
+      kind: 'struct',
+      fields: [['vote_percentage', 'u16']],
+    },
+  ],
+]);

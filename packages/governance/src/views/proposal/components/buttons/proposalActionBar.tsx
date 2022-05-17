@@ -4,32 +4,36 @@ import {
   Proposal,
   ProposalState,
   TokenOwnerRecord,
+  YesNoVote,
 } from '@solana/spl-governance';
 
 import SignOffButton from './signOffButton';
 import { FinalizeVoteButton } from './finalizeVoteButton';
 import { RelinquishVoteButton } from './relinquishVoteButton';
-import { YesNoVote } from '@solana/spl-governance';
 import { CastVoteButton } from './castVoteButton';
 
 import {
   useWalletSignatoryRecord,
   useTokenOwnerVoteRecord,
+  useRealmConfig,
 } from '../../../../hooks/apiHooks';
 import { useHasVoteTimeExpired } from '../../../../hooks/useHasVoteTimeExpired';
 import { ProgramAccount } from '@solana/spl-governance';
 import CancelButton from './cancelButton';
+import { AccountVoterWeightRecord } from '../../../../hooks/governance-sdk';
 
 export function ProposalActionBar({
   governance,
   tokenOwnerRecord,
+  voterWeightRecord,
   proposal,
 }: {
   governance: ProgramAccount<Governance>;
-  tokenOwnerRecord: ProgramAccount<TokenOwnerRecord> | undefined;
+  tokenOwnerRecord?: ProgramAccount<TokenOwnerRecord>;
+  voterWeightRecord?: AccountVoterWeightRecord;
   proposal: ProgramAccount<Proposal>;
 }) {
-  let signatoryRecord = useWalletSignatoryRecord(proposal.pubkey);
+  const signatoryRecord = useWalletSignatoryRecord(proposal.pubkey);
 
   const voteRecord = useTokenOwnerVoteRecord(
     proposal.pubkey,
@@ -37,6 +41,9 @@ export function ProposalActionBar({
   );
 
   const hasVoteTimeExpired = useHasVoteTimeExpired(governance, proposal);
+
+  const realmConfig = useRealmConfig(governance?.account.realm);
+  const communityVoterWeightAddin = realmConfig?.account.communityVoterWeightAddin;
 
   return (
     <div className="proposal-actions">
@@ -72,6 +79,8 @@ export function ProposalActionBar({
             governance={governance}
             proposal={proposal}
             tokenOwnerRecord={tokenOwnerRecord}
+            voterWeightRecord={voterWeightRecord}
+            communityVoterWeightAddin={communityVoterWeightAddin}
             vote={YesNoVote.Yes}
             voteRecord={voteRecord}
             hasVoteTimeExpired={hasVoteTimeExpired}
@@ -81,6 +90,8 @@ export function ProposalActionBar({
             proposal={proposal}
             vote={YesNoVote.No}
             tokenOwnerRecord={tokenOwnerRecord}
+            voterWeightRecord={voterWeightRecord}
+            communityVoterWeightAddin={communityVoterWeightAddin}
             voteRecord={voteRecord}
             hasVoteTimeExpired={hasVoteTimeExpired}
           />

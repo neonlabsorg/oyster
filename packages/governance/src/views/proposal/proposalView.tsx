@@ -30,6 +30,7 @@ import {
   useProposal,
   useTokenOwnerRecords,
   useWalletTokenOwnerRecord,
+  useVoterWeightRecord,
   useInstructionsByProposal,
   useVoteRecordsByProposal,
   useSignatoriesByProposal,
@@ -251,6 +252,7 @@ function InnerProposalView({
     governance.account.realm,
     proposal.account.governingTokenMint,
   );
+  const voterWeightRecord = useVoterWeightRecord(realm, governance);
   const instructions = useInstructionsByProposal(proposal.pubkey);
   const signatories = useSignatoriesByProposal(proposal.pubkey);
 
@@ -300,6 +302,7 @@ function InnerProposalView({
               governance={governance}
               proposal={proposal}
               tokenOwnerRecord={tokenOwnerRecord}
+              voterWeightRecord={voterWeightRecord}
             ></ProposalActionBar>
           </Col>
         </Row>
@@ -364,6 +367,7 @@ function InnerProposalView({
                 .filter(s => s.account.signedOff)
                 .map(s => (
                   <ExplorerLink
+                    key={s.account.signatory.toString()}
                     address={s.account.signatory}
                     type="address"
                     short
