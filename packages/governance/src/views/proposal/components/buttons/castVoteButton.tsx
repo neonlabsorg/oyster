@@ -1,5 +1,5 @@
 import { Button, Col, Modal, Row, Radio } from 'antd';
-import React, { useState } from 'react';
+import React from 'react';
 
 import { LABELS } from '../../../../constants';
 
@@ -23,12 +23,8 @@ import { useRpcContext } from '../../../../hooks/useRpcContext';
 import { Option } from '../../../../tools/option';
 import { AccountVoterWeightRecord } from '../../../../hooks/governance-sdk';
 import { PublicKey } from '@solana/web3.js';
+import { VOTE_PERCENTAGE_OPTIONS, useProposalVotingContext } from '../../../../contexts/ProposalVotingContext';
 
-const options = [
-  { label: '15%', value: 1_500 },
-  { label: '30%', value: 3_000 },
-  { label: '100%', value: 10_000 },
-];
 
 export function CastVoteButton({
   proposal,
@@ -50,17 +46,19 @@ export function CastVoteButton({
   hasVoteTimeExpired: boolean | undefined;
 }) {
   const rpcContext = useRpcContext();
-  const [votePercentage, setVotePercentage] = useState(options[0].value)
+  const {votePercentage, setVotePercentage} = useProposalVotingContext()
+
+  const options = Object.assign({}, VOTE_PERCENTAGE_OPTIONS)
 
   const canVote =
     !tokenOwnerRecord?.account.governingTokenDepositAmount.isZero()
     || (voterWeightRecord && voterWeightRecord.voterWeight.account.voterWeight.toNumber() > 0);
 
-  const isVisible =
-    hasVoteTimeExpired === false &&
-    voteRecord?.isNone() &&
-    canVote &&
-    proposal.account.state === ProposalState.Voting;
+  const isVisible = true
+    // hasVoteTimeExpired === false &&
+    // voteRecord?.isNone() &&
+    // canVote &&
+    // proposal.account.state === ProposalState.Voting;
 
   const [btnLabel, title, msg, icon] =
     vote === YesNoVote.Yes

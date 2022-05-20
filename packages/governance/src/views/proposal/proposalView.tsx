@@ -252,6 +252,7 @@ function InnerProposalView({
     governance.account.realm,
     proposal.account.governingTokenMint,
   );
+  console.log(tokenOwnerRecord)
   const voterWeightRecord = useVoterWeightRecord(realm, governance);
   const instructions = useInstructionsByProposal(proposal.pubkey);
   const signatories = useSignatoriesByProposal(proposal.pubkey);
