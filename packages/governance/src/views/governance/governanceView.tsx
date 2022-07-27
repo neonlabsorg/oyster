@@ -135,7 +135,7 @@ export const GovernanceView = () => {
                   type="address"
                 />
               )}
-              {realmLink && (
+              {(realmLink && realm?.account.name) && (
                 <Button
                   type="dashed"
                   href={realmLink}
@@ -203,12 +203,12 @@ export const GovernanceView = () => {
           loading={isProposalsLoading}
           itemLayout="vertical"
           size="large"
-          pagination={{
+          pagination={ proposals.length >= PAGE_SIZE ? {
             onChange: page => {
               setPage(page);
             },
             pageSize: PAGE_SIZE,
-          }}
+          } : false }
           dataSource={proposalItems}
           renderItem={item => (
             <List.Item
