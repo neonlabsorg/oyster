@@ -118,13 +118,6 @@ export const GovernanceView = () => {
               {governanceMeta?.name}
             </h2>
             <Space>
-              {(
-                <ExplorerLink
-                  short
-                  address={governance.account.governedAccount}
-                  type='address'
-                />
-              )}
               {(realmLink && realm?.account.name) && (
                 <>
                   <Button
@@ -141,6 +134,13 @@ export const GovernanceView = () => {
                     Realm: {realm?.account.name}
                   </Button>
                 </>
+              )}
+              {(
+                <ExplorerLink
+                  short
+                  address={governance.account.governedAccount}
+                  type='address'
+                />
               )}
             </Space>
             <Space>

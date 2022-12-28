@@ -289,12 +289,9 @@ function InnerProposalView({
               />
               <Col>
                 <h1>{proposal.account.name}</h1>
-                <ProposalStateBadge
-                  proposal={proposal}
-                  governance={governance}
-                />
+                <Space>
                 {governanceInfo &&
-                  <Space>
+                  <>
                     <Button
                       className={'back-button'}
                       icon={<LeftOutlined />}
@@ -308,8 +305,13 @@ function InnerProposalView({
                     >
                       Governance: {governanceInfo.name}
                     </Button>
-                  </Space>
+                  </>
                   }
+                    <ProposalStateBadge
+                      proposal={proposal}
+                      governance={governance}
+                    />
+                  </Space>
               </Col>
             </Row>
           </Col>
