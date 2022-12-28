@@ -1,4 +1,4 @@
-import { Button, Card, Col, Row, Spin, Statistic, Tabs } from 'antd';
+import { Button, Card, Col, Row, Spin, Statistic, Tabs, Space } from 'antd';
 import React, { useMemo, useState } from 'react';
 import { LABELS } from '../../constants';
 import { constants, contexts, ExplorerLink, TokenIcon } from '@oyster/common';
@@ -45,6 +45,7 @@ import { getMintMaxVoteWeight } from '../../tools/units';
 import { ProposalActionBar } from './components/buttons/proposalActionBar';
 import { DryRunProposalButton } from './components/instruction/buttons/dryRunProposalButton';
 import { useGovernanceMeta } from '../../hooks/useGovernanceMeta';
+import {LeftOutlined} from "@ant-design/icons";
 
 const { TabPane } = Tabs;
 
@@ -292,12 +293,23 @@ function InnerProposalView({
                   proposal={proposal}
                   governance={governance}
                 />
-                {governanceInfo && <Button
-                  type="dashed"
-                  href={governanceInfo.href}
-                >
-                  Governance: {governanceInfo.name}
-                </Button>}
+                {governanceInfo &&
+                  <Space>
+                    <Button
+                      className={'back-button'}
+                      icon={<LeftOutlined />}
+                      href={governanceInfo.href}
+                    >
+                      Back
+                    </Button>
+                    <Button
+                      type="dashed"
+                      href={governanceInfo.href}
+                    >
+                      Governance: {governanceInfo.name}
+                    </Button>
+                  </Space>
+                  }
               </Col>
             </Row>
           </Col>
