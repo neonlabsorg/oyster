@@ -2,7 +2,7 @@ import { Badge, Button, Col, List, Row, Space, Spin, Typography } from 'antd';
 import React, { useMemo, useState } from 'react';
 import { LAMPORTS_PER_SOL } from '@solana/web3.js';
 import { Proposal, ProposalState } from '@solana/spl-governance';
-import {ClockCircleOutlined, GithubOutlined} from '@ant-design/icons';
+import {ClockCircleOutlined, LeftOutlined } from '@ant-design/icons';
 import { useRealm } from '../../contexts/GovernanceContext';
 
 import { useGovernance, useNativeTreasury, useProposalsByGovernance } from '../../hooks/apiHooks';
@@ -22,7 +22,6 @@ import {
 } from '../../tools/units';
 import { GovernanceActionBar } from './buttons/governanceActionBar';
 import { useGovernanceMeta } from '../../hooks/useGovernanceMeta';
-import { LeftOutlined } from '@ant-design/icons';
 
 const { Text } = Typography;
 

@@ -45,7 +45,7 @@ import { getMintMaxVoteWeight } from '../../tools/units';
 import { ProposalActionBar } from './components/buttons/proposalActionBar';
 import { DryRunProposalButton } from './components/instruction/buttons/dryRunProposalButton';
 import { useGovernanceMeta } from '../../hooks/useGovernanceMeta';
-import {LeftOutlined} from "@ant-design/icons";
+import { LeftOutlined } from "@ant-design/icons";
 
 const { TabPane } = Tabs;
 
