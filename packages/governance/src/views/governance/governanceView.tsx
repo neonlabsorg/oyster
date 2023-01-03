@@ -4,8 +4,13 @@ import { LAMPORTS_PER_SOL } from '@solana/web3.js';
 import { Proposal, ProposalState } from '@solana/spl-governance';
 import {ClockCircleOutlined, LeftOutlined } from '@ant-design/icons';
 import { useRealm } from '../../contexts/GovernanceContext';
+import { RealmDepositBadge } from '../../components/RealmDepositBadge/realmDepositBadge';
 
-import { useGovernance, useNativeTreasury, useProposalsByGovernance } from '../../hooks/apiHooks';
+import {
+  useGovernance,
+  useNativeTreasury,
+  useProposalsByGovernance
+} from '../../hooks/apiHooks';
 import './style.less'; // Don't remove this line, it will break dark mode if you do due to weird transpiling conditions
 import { ProposalStateBadge } from '../proposal/components/header/proposalStateBadge';
 import { useHistory } from 'react-router-dom';
@@ -110,7 +115,7 @@ export const GovernanceView = () => {
               realm={realm}
               governance={governance}
               showVotingCount={false}
-            ></GovernanceBadge>
+            />
           )}
 
           <Space direction='vertical'>
@@ -184,12 +189,16 @@ export const GovernanceView = () => {
                         address={nativeTreasury.pubkey}
                         type='address'
                         length={3}
-                      ></ExplorerLink>{' '}
+                      />{' '}
                     </div>
                   )}
                 </Space>
               )}
             </Space>
+            <RealmDepositBadge
+              realm={realm}
+              showVoteWeights
+            />
           </Space>
 
           <GovernanceActionBar governance={governance} realm={realm} />

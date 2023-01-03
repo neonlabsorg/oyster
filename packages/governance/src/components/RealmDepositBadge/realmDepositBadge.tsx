@@ -6,14 +6,14 @@ import BN from 'bn.js';
 
 import { formatMintNaturalAmountAsDecimal, formatMintVoteWeight } from '../../tools/units';
 import { useMintFormatter } from '../../hooks/useMintFormatter';
-import { useVoterWeightRecord } from '../../hooks/apiHooks';
+import {useVoterWeightRecord, useWalletTokenOwnerRecord} from '../../hooks/apiHooks';
 // import {useDepositedAccountsContext} from "./realmDepositProvider";
 
 const { useMint } = contexts.Accounts;
 
 export interface RealmDepositBadgeProps {
-  councilTokenOwnerRecord: ProgramAccount<TokenOwnerRecord> | undefined;
-  communityTokenOwnerRecord: ProgramAccount<TokenOwnerRecord> | undefined;
+  councilTokenOwnerRecord?: ProgramAccount<TokenOwnerRecord> | undefined;
+  communityTokenOwnerRecord?: ProgramAccount<TokenOwnerRecord> | undefined;
   realm?: ProgramAccount<Realm>;
   showVoteWeights?: boolean;
 }
@@ -25,7 +25,6 @@ export function RealmDepositBadge(props: RealmDepositBadgeProps) {
   const { voterWeight } = useVoterWeightRecord(realm);
   // const { depositedAccounts } = useDepositedAccountsContext();
   // const deposit = depositedAccounts?.length === 1 ? depositedAccounts[0].balance : depositedAccounts?.reduce((acc, current) => acc.add(current.balance), new BN(0));
-
 
   const deposited = useMemo(() => {
     return formatValue(voterWeight?.account.voterWeight ?? new BN(0)); //TODO: use total_amount
