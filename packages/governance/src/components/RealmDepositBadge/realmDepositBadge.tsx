@@ -6,7 +6,7 @@ import BN from 'bn.js';
 
 import { formatMintNaturalAmountAsDecimal, formatMintVoteWeight } from '../../tools/units';
 import { useMintFormatter } from '../../hooks/useMintFormatter';
-import {useVoterWeightRecord, useWalletTokenOwnerRecord} from '../../hooks/apiHooks';
+import {useVoterWeightRecord} from '../../hooks/apiHooks';
 // import {useDepositedAccountsContext} from "./realmDepositProvider";
 
 const { useMint } = contexts.Accounts;
@@ -59,7 +59,7 @@ export function RealmDepositBadgeOyster(props: RealmDepositBadgeProps) {
           mint={communityMint}
           tokenOwnerRecord={communityTokenOwnerRecord}
           showVoteWeights={showVoteWeights}
-        ></TokenDepositStatistics>
+        />
       )}
       {communityTokenOwnerRecord && councilTokenOwnerRecord && ' | '}
       {councilTokenOwnerRecord && councilMint && (
@@ -68,7 +68,7 @@ export function RealmDepositBadgeOyster(props: RealmDepositBadgeProps) {
           mint={councilMint}
           tokenOwnerRecord={councilTokenOwnerRecord}
           showVoteWeights={showVoteWeights}
-        ></TokenDepositStatistics>
+        />
       )}
     </>
   );
