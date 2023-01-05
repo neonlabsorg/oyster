@@ -132,12 +132,9 @@ export const GovernanceView = () => {
                   >
                     Back
                   </Button>
-                  <Button
-                    type='dashed'
-                    href={realmLink}
-                  >
+                  <div>
                     Realm: {realm?.account.name}
-                  </Button>
+                  </div>
                 </>
               )}
               {(

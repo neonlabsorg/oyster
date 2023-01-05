@@ -299,12 +299,9 @@ function InnerProposalView({
                     >
                       Back
                     </Button>
-                    <Button
-                      type="dashed"
-                      href={governanceInfo.href}
-                    >
+                    <div>
                       Governance: {governanceInfo.name}
-                    </Button>
+                    </div>
                   </>
                   }
                     <ProposalStateBadge
