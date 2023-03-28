@@ -30,8 +30,8 @@ jobs:
         with:
           args: --acl public-read --delete
         env:
-          AWS_S3_BUCKET: ${{secrets.DAO_QA_S3_BUCKET}}
+          AWS_S3_BUCKET: ${{vars.DAO_QA_S3_BUCKET}}
           AWS_ACCESS_KEY_ID: ${{secrets.DAO_QA_AWS_ACCESS_KEY_ID}}
           AWS_SECRET_ACCESS_KEY: ${{secrets.DAO_QA_AWS_SECRET_ACCESS_KEY  }}
-          AWS_REGION: ${{secrets.DAO_QA_S3_BUCKET_REGION}}
+          AWS_REGION: ${{vars.DAO_QA_S3_BUCKET_REGION}}
           SOURCE_DIR: "build/governance"
