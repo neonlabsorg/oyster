@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { contexts } from '@oyster/common';
+import {contexts, useWallet} from '@oyster/common';
 import { ProgramAccount, Realm, TokenOwnerRecord } from '@solana/spl-governance';
 import { MintInfo } from '@solana/spl-token';
 import BN from 'bn.js';
@@ -23,13 +23,17 @@ export function RealmDepositBadge(props: RealmDepositBadgeProps) {
   const { realm } = props;
   const { formatValue } = useMintFormatter(realm?.account.communityMint) || {};
   const { voterWeight } = useVoterWeightRecord(realm);
+  const { connected } = useWallet();
   // const { depositedAccounts } = useDepositedAccountsContext();
   // const deposit = depositedAccounts?.length === 1 ? depositedAccounts[0].balance : depositedAccounts?.reduce((acc, current) => acc.add(current.balance), new BN(0));
 
   const deposited = useMemo(() => {
+    if (!connected) {
+      return formatValue(new BN(0))
+    }
     return formatValue(voterWeight?.account.voterWeight ?? new BN(0)); //TODO: use total_amount
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [voterWeight, formatValue]);
+  }, [voterWeight, formatValue, connected]);
 
   return <>
     {<div>Deposited: {deposited} NEON</div>}

@@ -1,21 +1,27 @@
-import React, { useCallback } from 'react';
+import React, {useCallback, useState} from 'react';
 import { Button, Select } from 'antd';
 import { ENDPOINTS, useConnectionConfig, useWallet, useWalletModal } from '../../contexts';
 import { notify, shortenAddress } from '../../utils';
 import { CopyOutlined } from '@ant-design/icons';
+import { useLocalStorageState } from '@oyster/common';
+import { SignerWalletAdapter } from "@solana/wallet-adapter-base";
 
 export const Settings = ({
   additionalSettings,
 }: {
   additionalSettings?: JSX.Element;
 }) => {
-  const { connected, disconnect, publicKey } = useWallet();
+  const { adapter, connected, disconnect, publicKey } = useWallet();
   const { endpoint, setEndpoint } = useConnectionConfig();
   const { setVisible } = useWalletModal();
   const open = useCallback(() => setVisible(true), [setVisible]);
 
+  const [walletName, setWalletName] = useLocalStorageState(
+    'walletName',
+  );
+
   return (
-    <>
+    <React.StrictMode>
       <div style={{ display: 'grid' }}>
         Network:{' '}
         <Select
@@ -55,7 +61,13 @@ export const Settings = ({
             </Button>
             <Button
               type="primary"
-              onClick={() => disconnect().catch()}
+              onClick={
+                () => {
+                  setWalletName(null)
+                  disconnect().catch()
+                  return (adapter as SignerWalletAdapter)?.disconnect().catch()
+                }
+              }
               style={{ marginBottom: 5 }}
             >
               Disconnect
@@ -64,6 +76,6 @@ export const Settings = ({
         )}
         {additionalSettings}
       </div>
-    </>
+    </React.StrictMode>
   );
 };

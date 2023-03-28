@@ -8,7 +8,7 @@ import {
   Realm,
   withCreateTokenOwnerRecord
 } from '@solana/spl-governance';
-import {useMint, useNativeAccount} from '@oyster/common';
+import {useMint, useNativeAccount, useWallet} from '@oyster/common';
 import {Redirect} from 'react-router';
 import BN from 'bn.js';
 
@@ -32,6 +32,7 @@ export interface NeonProposalButtonProps {
 
 export function NewProposalButton(props: NeonProposalButtonProps) {
   const { realm, governance, buttonProps } = props;
+  const { connected } = useWallet();
   const rpcContext = useRpcContext();
   const { programId } = rpcContext;
   const [redirectTo, setRedirectTo] = useState('');
@@ -83,7 +84,7 @@ export function NewProposalButton(props: NeonProposalButtonProps) {
   const canCreateProposalUsingVoterWeight = !voterWeight?.account.voterWeight.isZero();
 
   const canCreateProposal = hasLamports && canCreateProposalUsingVoterWeight && (canCreateProposalUsingCommunityTokens ||
-    canCreateProposalUsingCouncilTokens);
+    canCreateProposalUsingCouncilTokens) && connected;
 
   if (!governance || !communityMint || !realm) {
     return null;
@@ -98,6 +99,9 @@ export function NewProposalButton(props: NeonProposalButtonProps) {
     }
     if(!hasLamports) {
       creationDisabledReason = LABELS.PROPOSAL_CANT_ADD_LAMPORTS;
+    }
+    if(!connected) {
+      creationDisabledReason = LABELS.CONNECT_LABEL;
     }
   }
 
