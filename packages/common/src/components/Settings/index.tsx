@@ -1,9 +1,8 @@
 import React, {useCallback, useState} from 'react';
 import { Button, Select } from 'antd';
 import { ENDPOINTS, useConnectionConfig, useWallet, useWalletModal } from '../../contexts';
-import { notify, shortenAddress } from '../../utils';
+import { notify, shortenAddress, useLocalStorageState } from '../../utils';
 import { CopyOutlined } from '@ant-design/icons';
-import { useLocalStorageState } from '@oyster/common';
 import { SignerWalletAdapter } from "@solana/wallet-adapter-base";
 
 export const Settings = ({
